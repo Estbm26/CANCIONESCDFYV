@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101321">
+  <title>Repertorio musical CDFYV</title>
+  <style>
+    :root{color-scheme:dark;--bg:#101321;--panel:#191f32;--panel2:#202941;--text:#f3f5fb;--muted:#aab3c7;--line:#303a54;--accent:#9b8cff;--accent2:#6ee7c2;--danger:#ff7788}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top right,#25234a 0,#101321 42%);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;color:var(--text);min-height:100vh}
+    .wrap{max-width:1120px;margin:auto;padding:28px 18px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+    .eyebrow{color:var(--accent2);font-size:.78rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.top h1{font-size:clamp(1.8rem,4vw,2.7rem);margin:7px 0}.sub{color:var(--muted);margin:0}
+    .status{border:1px solid var(--line);border-radius:999px;padding:9px 13px;color:var(--muted);font-size:.85rem}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}.stat,.panel{background:rgba(25,31,50,.94);border:1px solid var(--line);border-radius:18px}.stat{padding:17px}.stat strong{display:block;font-size:1.8rem}.stat span{color:var(--muted);font-size:.88rem}
+    .layout{display:grid;grid-template-columns: minmax(260px,340px) 1fr;gap:18px;align-items:start}.panel{padding:20px}.panel h2{margin:0 0 16px;font-size:1.15rem}
+    label{display:block;font-size:.85rem;color:var(--muted);margin:13px 0 6px}input,select{width:100%;padding:12px 13px;border-radius:11px;border:1px solid var(--line);background:#11182a;color:var(--text);font:inherit;outline:none}input:focus,select:focus{border-color:var(--accent)}
+    button{border:0;border-radius:11px;padding:11px 14px;font:inherit;font-weight:700;cursor:pointer;background:var(--accent);color:#151329}button.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}button.danger{background:#512635;color:#ffdce1}button:disabled{opacity:.5;cursor:not-allowed}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.actions button{flex:1}.toolbar{display:grid;grid-template-columns:1fr 150px 150px;gap:9px;margin-bottom:14px}
+    .song-list{display:grid;gap:10px}.song{padding:15px;border:1px solid var(--line);background:#151c2e;border-radius:14px;display:flex;justify-content:space-between;gap:14px;align-items:center}
+    .song h3{margin:0 0 6px;font-size:1rem}.meta{color:var(--muted);font-size:.84rem;line-height:1.5}.tag{display:inline-block;padding:4px 8px;border-radius:999px;background:#302d55;color:#d9d2ff;font-size:.74rem;font-weight:800;margin-right:6px}.tag.slow{background:#24483f;color:#a6f4dc}.song-buttons{display:flex;gap:7px;flex-wrap:wrap}.song-buttons button{padding:8px 10px;font-size:.8rem}
+    .empty{padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}.hint{font-size:.8rem;color:var(--muted);line-height:1.5;margin-top:12px}.pending{color:#ffd58b}.hidden{display:none!important}
+    @media(max-width:800px){.layout{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr 1fr}.toolbar input{grid-column:1/-1}}
+    @media(max-width:480px){.stats{gap:7px}.stat{padding:12px}.stat strong{font-size:1.4rem}.panel{padding:15px}.song{align-items:flex-start;flex-direction:column}.song-buttons{width:100%}.song-buttons button{flex:1}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div><div class="eyebrow">CDFYV · Música</div><h1>Repertorio musical</h1><p class="sub">Organiza las canciones de alabanza y adoración.</p></div>
+    <div class="status" id="connection">● Comprobando conexión…</div>
+  </header>
+  <section class="stats">
+    <div class="stat"><strong id="total">0</strong><span>Canciones registradas</span></div>
+    <div class="stat"><strong id="praise">0</strong><span>Alabanzas</span></div>
+    <div class="stat"><strong id="worship">0</strong><span>Adoraciones</span></div>
+  </section>
+  <main class="layout">
+    <section class="panel">
+      <h2 id="formTitle">Agregar canción</h2>
+      <form id="songForm">
+        <input type="hidden" id="songId">
+        <label for="name">Nombre de la canción</label><input id="name" maxlength="120" required placeholder="Ej. Tu fidelidad">
+        <label for="type">Tipo de canción</label><select id="type"><option value="Alabanza">Alabanza (movida)</option><option value="Adoración">Adoración (lenta)</option></select>
+        <label for="key">Tonalidad</label><select id="key"><option value="">Pendiente de tonalidad</option><option> C </option><option>C#</option><option>D</option><option>D#</option><option>E</option><option>F</option><option>F#</option><option>G</option><option>G#</option><option>A</option><option>A#</option><option>B</option><option value="Cm">Cm</option><option value="C#m">C#m</option><option value="Dm">Dm</option><option value="D#m">D#m</option><option value="Em">Em</option><option value="Fm">Fm</option><option value="F#m">F#m</option><option value="Gm">Gm</option><option value="G#m">G#m</option><option value="Am">Am</option><option value="A#m">A#m</option><option value="Bm">Bm</option></select>
+        <label for="person">Ingresada por</label><input id="person" maxlength="80" placeholder="Nombre de quien la agrega">
+        <div class="actions"><button type="submit" id="saveBtn">Guardar canción</button><button type="button" class="secondary hidden" id="cancelBtn">Cancelar</button></div>
+      </form>
+      <p class="hint">Las canciones sin tonalidad aparecerán como pendientes. Antes de usar la base compartida, configura Firebase siguiendo el README.</p>
+    </section>
+    <section class="panel">
+      <h2>Biblioteca de canciones</h2>
+      <div class="toolbar">
+        <input id="search" placeholder="Buscar canción o persona…">
+        <select id="filterType"><option value="">Todos los tipos</option><option>Alabanza</option><option>Adoración</option></select>
+        <select id="filterKey"><option value="">Todas las tonalidades</option><option value="pending">Pendientes</option><option>C</option><option>C#</option><option>D</option><option>D#</option><option>E</option><option>F</option><option>F#</option><option>G</option><option>G#</option><option>A</option><option>A#</option><option>B</option><option>Cm</option><option>C#m</option><option>Dm</option><option>D#m</option><option>Em</option><option>Fm</option><option>F#m</option><option>Gm</option><option>G#m</option><option>Am</option><option>A#m</option><option>Bm</option></select>
+      </div>
+      <div class="actions" style="margin:0 0 14px"><button class="secondary" id="pendingBtn" type="button">Ver pendientes</button><button class="secondary" id="exportBtn" type="button">Exportar CSV</button></div>
+      <div id="songList" class="song-list"><div class="empty">Cargando canciones…</div></div>
+    </section>
+  </main>
+</div>
+<script type="module">
+  // Pega aquí la configuración de tu proyecto Firebase (ver README).
+  const firebaseConfig = {
+    apiKey: "PEGA_AQUI_TU_API_KEY",
+    authDomain: "PEGA_AQUI_TU_PROYECTO.firebaseapp.com",
+    databaseURL: "PEGA_AQUI_TU_DATABASE_URL",
+    projectId: "PEGA_AQUI_TU_PROYECTO",
+    storageBucket: "PEGA_AQUI_TU_PROYECTO.appspot.com",
+    messagingSenderId: "PEGA_AQUI_TU_SENDER_ID",
+    appId: "PEGA_AQUI_TU_APP_ID"
+  };
+
+  let songs = [];
+  let cloudReady = false;
+  let dbRef = null;
+  const $ = id => document.getElementById(id);
+  const localKey = "cdfyv_repertorio_v1";
+
+  function loadLocal(){ try { songs = JSON.parse(localStorage.getItem(localKey) || "[]"); } catch { songs = []; } render(); }
+  function saveLocal(){ localStorage.setItem(localKey, JSON.stringify(songs)); }
+  function persist(){
+    if (!cloudReady) { saveLocal(); return; }
+    // En la nube se reemplaza la lista completa para mantener una estructura sencilla.
+    import("https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js").then(({set}) => set(dbRef, songs))
+      .catch(err => { console.error(err); $("connection").textContent = "● Error guardando en la nube"; });
+  }
+  function escapeHtml(value=""){ return String(value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+  function render(){
+    $("total").textContent = songs.length;
+    $("praise").textContent = songs.filter(s=>s.type==="Alabanza").length;
+    $("worship").textContent = songs.filter(s=>s.type==="Adoración").length;
+    const q = $("search").value.trim().toLowerCase(), type=$("filterType").value, key=$("filterKey").value;
+    const filtered = songs.filter(s => (!q || (s.name+" "+(s.person||"")).toLowerCase().includes(q)) && (!type || s.type===type) && (!key || (key==="pending" ? !s.key : s.key===key)));
+    $("songList").innerHTML = filtered.length ? filtered.slice().sort((a,b)=>a.name.localeCompare(b.name,"es")).map(s=>`
+      <article class="song">
+        <div><h3>${escapeHtml(s.name)}</h3><div class="meta"><span class="tag ${s.type==="Adoración"?"slow":""}">${escapeHtml(s.type)}</span>${s.key ? "Tonalidad: "+escapeHtml(s.key) : '<span class="pending">Pendiente de tonalidad</span>'}<br>Ingresada por: ${escapeHtml(s.person||"No especificado")}</div></div>
+        <div class="song-buttons"><button class="secondary" data-edit="${s.id}">Editar</button><button class="danger" data-delete="${s.id}">Eliminar</button></div>
+      </article>`).join("") : '<div class="empty">No se encontraron canciones.</div>';
+  }
+  $("songForm").addEventListener("submit", e=>{
+    e.preventDefault();
+    const id=$("songId").value, name=$("name").value.trim(), type=$("type").value, key=$("key").value, person=$("person").value.trim();
+    const duplicate=songs.find(s=>s.name.toLowerCase()===name.toLowerCase() && s.id!==id);
+    if(duplicate && !confirm("Ya existe una canción con ese nombre. ¿Deseas guardarla de todos modos?")) return;
+    if(id){ songs=songs.map(s=>s.id===id?{...s,name,type,key,person}:s); }
+    else { songs.push({id:crypto.randomUUID(),name,type,key,person,createdAt:Date.now()}); }
+    persist(); resetForm(); render();
+  });
+  function resetForm(){ $("songForm").reset(); $("songId").value=""; $("formTitle").textContent="Agregar canción"; $("saveBtn").textContent="Guardar canción"; $("cancelBtn").classList.add("hidden"); }
+  $("cancelBtn").addEventListener("click",resetForm);
+  $("songList").addEventListener("click",e=>{
+    const edit=e.target.dataset.edit, del=e.target.dataset.delete;
+    if(edit){const s=songs.find(x=>x.id===edit);if(!s)return;$("songId").value=s.id;$("name").value=s.name;$("type").value=s.type;$("key").value=s.key||"";$("person").value=s.person||"";$("formTitle").textContent="Editar canción";$("saveBtn").textContent="Guardar cambios";$("cancelBtn").classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});}
+    if(del){const s=songs.find(x=>x.id===del);if(s&&confirm(`¿Eliminar "${s.name}" del repertorio?`)){songs=songs.filter(x=>x.id!==del);persist();render();}}
+  });
+  ["search","filterType","filterKey"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+  $("pendingBtn").addEventListener("click",()=>{$("filterKey").value="pending";render();});
+  $("exportBtn").addEventListener("click",()=>{
+    const rows=[["Canción","Tipo","Tonalidad","Ingresada por"],...songs.map(s=>[s.name,s.type,s.key||"Pendiente",s.person||""])];
+    const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\n");
+    const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="repertorio-cdfyv.csv";a.click();URL.revokeObjectURL(url);
+  });
+
+  loadLocal();
+  const configured = firebaseConfig.apiKey !== "PEGA_AQUI_TU_API_KEY" && firebaseConfig.databaseURL !== "PEGA_AQUI_TU_DATABASE_URL";
+  if(configured){
+    try{
+      const [{initializeApp},{getDatabase,ref,onValue,set},{getAuth,signInAnonymously}] = await Promise.all([
+        import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"),
+        import("https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"),
+        import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js")
+      ]);
+      const app=initializeApp(firebaseConfig), auth=getAuth(app);
+      await signInAnonymously(auth);
+      const db=getDatabase(app);dbRef=ref(db,"songs");
+      onValue(dbRef,snapshot=>{songs=snapshot.val()||[];cloudReady=true;$("connection").textContent="● Sincronizado en la nube";render();},err=>{$("connection").textContent="● Error de conexión";console.error(err);});
+    }catch(err){console.error(err);$("connection").textContent="● Firebase no configurado correctamente";}
+  }else{
+    $("connection").textContent="● Modo local (solo este dispositivo)";
+  }
+</script>
+</body>
+</html>
