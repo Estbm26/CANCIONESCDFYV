@@ -1,0 +1,40 @@
+
+name: Registrar una canción
+description: Agregar una canción al repertorio de CDFYV
+title: "[CANCIÓN] "
+labels:
+  - cancion
+body:
+  - type: input
+    id: nombre
+    attributes:
+      label: Nombre de la canción
+      placeholder: Escribe el nombre de la canción
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ritmo
+    attributes:
+      label: Tipo de canción
+      options:
+        - Movida
+        - Lenta
+    validations:
+      required: true
+
+  - type: input
+    id: tono
+    attributes:
+      label: Tono en que está montada
+      placeholder: Ej. C, D, E, F, G, Am
+    validations:
+      required: true
+
+  - type: input
+    id: ingresada_por
+    attributes:
+      label: ¿Quién ingresa la canción?
+      placeholder: Nombre de la persona
+    validations:
+      required: true
